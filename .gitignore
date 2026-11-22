@@ -1,0 +1,10 @@
+# Windows og editorer
+Thumbs.db
+Desktop.ini
+.DS_Store
+.vscode/
+.idea/
+
+# Lokale filer
+*.log
+*.zip
