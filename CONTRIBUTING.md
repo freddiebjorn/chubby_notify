@@ -1,6 +1,6 @@
 # Bidrag
 
-Fejl og ønsker oprettes som [issue](../../issues). Til almindelige spørgsmål er der Chubby Development-serveren på Discord: <https://discord.gg/vwe8b8fnRm>.
+Fejl og ønsker oprettes som [issue](../../issues). Til almindelige spørgsmål er der Chubby Development-serveren på Discord: <https://discord.gg/ge7MZRseaq>.
 
 Vil du rette noget selv, så lav en pull request.
 

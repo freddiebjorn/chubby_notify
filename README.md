@@ -13,7 +13,7 @@ Små notifikationer til FiveM. Info, succes og fejl, uden afhængigheder.
 ![FiveM](https://img.shields.io/badge/FiveM-resource-00b588)
 ![Lua](https://img.shields.io/badge/Lua-5.4-00b588)
 
-**Dansk** · [English](README.en.md) · [Discord](https://discord.gg/vwe8b8fnRm)
+**Dansk** · [English](README.en.md) · [Discord](https://discord.gg/ge7MZRseaq)
 
 </div>
 
@@ -133,7 +133,7 @@ end)
 
 ## Hjælp og kontakt
 
-Fejl og ønsker oprettes som [issue](../../issues). Til spørgsmål er der Chubby Development-serveren på Discord, <https://discord.gg/vwe8b8fnRm>. Du kan også skrive direkte til mig: `freddie.bs`.
+Fejl og ønsker oprettes som [issue](../../issues). Til spørgsmål er der Chubby Development-serveren på Discord, <https://discord.gg/ge7MZRseaq>. Du kan også skrive direkte til mig: `freddie.bs`.
 
 ## Licens
 
