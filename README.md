@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/freddiebjorn/chubby_notify/media/demo.gif" alt="chubby_notify i brug" width="100%">
+<img src="https://raw.githubusercontent.com/freddiebjorn/chubby_notify/2f1f04b09143ace92e827dcb138dbbec52513a45/docs/demo.gif" alt="chubby_notify i brug" width="100%">
 
-![chubby_notify](https://raw.githubusercontent.com/freddiebjorn/chubby_notify/media/banner.png)
+![chubby_notify](https://raw.githubusercontent.com/freddiebjorn/chubby_notify/2f1f04b09143ace92e827dcb138dbbec52513a45/docs/banner.png)
 
 # chubby_notify
 
@@ -21,7 +21,7 @@ Små notifikationer til FiveM. Info, succes og fejl, uden afhængigheder.
 
 chubby_notify viser korte beskeder i siden af skærmen. De glider ind, står et par sekunder og forsvinder igen. Scriptet bruger ingen frameworks og henter ingenting fra internettet: skrifttypen (Poppins) ligger i mappen.
 
-<p align="center"><img src="https://raw.githubusercontent.com/freddiebjorn/chubby_notify/media/preview.png" alt="Eksempel" width="440"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/freddiebjorn/chubby_notify/2f1f04b09143ace92e827dcb138dbbec52513a45/docs/preview.png" alt="Eksempel" width="440"></p>
 
 ## Det kan scriptet
 
