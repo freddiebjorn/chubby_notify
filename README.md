@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="docs/demo.gif" alt="chubby_notify i brug" width="100%">
+
 ![chubby_notify](docs/banner.png)
 
 # chubby_notify
