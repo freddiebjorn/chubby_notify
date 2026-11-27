@@ -8,7 +8,7 @@
 
 Små notifikationer til FiveM. Info, succes og fejl, uden afhængigheder.
 
-![Version](https://img.shields.io/badge/version-1.0.0-00b588)
+![Version](https://img.shields.io/badge/version-1.1.0-00b588)
 ![Licens](https://img.shields.io/badge/licens-MIT-00b588)
 ![FiveM](https://img.shields.io/badge/FiveM-resource-00b588)
 ![Lua](https://img.shields.io/badge/Lua-5.4-00b588)
@@ -66,27 +66,55 @@ TriggerClientEvent('chubby_notify:notify', source, {
 
 | Felt | Betydning |
 |---|---|
-| `type` | `'info'` (standard), `'success'` eller `'error'`. ox_lib's `'inform'` og `'warning'` vises som info |
-| `title` | Overskrift. Udelades den, bruges teksten fra `Config.Titles` |
+| `type` | `'info'` (standard), `'success'`, `'error'` eller en type, du selv har lavet. ox_lib's `'inform'` og `'warning'` vises som info |
+| `title` | Overskrift. Udelades den, bruges typens overskrift fra `Config.Types` |
 | `description` | Selve beskeden. `\n` giver et linjeskift |
 | `duration` | Hvor længe den står, i millisekunder |
-| `icon` | Kun `'dollar'` findes. Uden `icon` får notifikationen ikonet for sin type |
+| `icon` | Navnet på et ikon i `Config.Icons`, fx `'dollar'`. Uden `icon` bruges typens ikon |
 
-Titlen afkortes ved 60 tegn og beskeden ved 300.
+Titlen afkortes som standard ved 60 tegn og beskeden ved 300.
 
 GTA's farvekoder fjernes fra teksten, og `~n~` bliver til et linjeskift. Angiver kaldet ikke en `type`, bruges farvekoden til at vælge den: `~r~` giver fejl og `~g~` giver succes.
 
 ## Indstillinger
 
-Alt står i `config.lua`.
+Alt står i `config.lua`, så du behøver ikke rette i andre filer. Genstart scriptet efter en ændring.
 
-| Indstilling | Standard | Betydning |
-|---|---|---|
-| `Config.Position` | `'right-center'` | `right-center`, `left-center`, `top-right`, `top-left`, `bottom-right`, `bottom-left`, `top-center` eller `bottom-center` |
-| `Config.MaxVisible` | `5` | Flere end det på én gang, og den ældste fjernes |
-| `Config.DefaultDuration` | `4000` | Varighed, når kaldet ikke angiver en |
-| `Config.MinDuration`, `Config.MaxDuration` | `1000`, `30000` | Grænser for varigheden |
-| `Config.Titles` | `Info`, `Succes`, `Fejl` | Overskrifter uden titel. Skriv dem om, hvis du vil have et andet sprog |
+| Indstilling | Hvad den styrer |
+|---|---|
+| `Config.Position` | Hvor på skærmen: `right-center`, `left-center`, `top-right`, `top-left`, `bottom-right`, `bottom-left`, `top-center` eller `bottom-center` |
+| `Config.MaxVisible` | Hvor mange der kan stå på én gang |
+| `Config.DefaultDuration`, `MinDuration`, `MaxDuration` | Varighed og grænser i millisekunder |
+| `Config.MaxTitleLength`, `MaxTextLength` | Hvor lange teksterne må være |
+| `Config.Style` | Bredde, afstande, hjørner, skriftstørrelser, tekstfarve og skrifttype |
+| `Config.Types` | Overskrift, farve og ikon for hver type |
+| `Config.DefaultType` | Typen, når et kald ikke angiver en kendt type |
+| `Config.Aliases`, `Config.ColorCodes` | Andre typenavne og GTA's farvekoder |
+| `Config.Icons` | Ikonerne |
+
+### Egen type og eget ikon
+
+Find et ikon på [Material Design Icons](https://pictogrammers.com/library/mdi/), vælg **Copy SVG Path**, og sæt stien ind i `config.lua`:
+
+```lua
+Config.Icons = {
+    -- de andre ikoner
+    car = 'indsæt stien her',
+}
+
+Config.Types = {
+    -- de andre typer
+    garage = { title = 'Garage', color = '#2547b8', icon = 'car' },
+}
+```
+
+```lua
+exports.chubby_notify:notify({ type = 'garage', description = 'Bilen står i garagen' })
+```
+
+### Opdaterer du fra 1.0.0?
+
+`config.lua` er bygget om. Brug den nye fil, og flyt dine egne værdier over. Overskrifterne står nu i `Config.Types`.
 
 ## Sammen med ox_lib og ESX
 
@@ -153,7 +181,7 @@ chubby_notify shows short messages at the side of the screen. They slide in, sta
 - Limits duration and text length, and renders text as plain text, so HTML in a message does nothing
 - Caps the number of visible notifications: the oldest one is removed when there are too many
 
-The default titles are Danish (`Succes`, `Fejl`). Change them in `config.lua`.
+The default titles are Danish (`Succes`, `Fejl`) and so are the comments in `config.lua`. Change the titles in `Config.Types`.
 
 ### Installation
 
@@ -187,27 +215,55 @@ TriggerClientEvent('chubby_notify:notify', source, {
 
 | Field | Meaning |
 |---|---|
-| `type` | `'info'` (default), `'success'` or `'error'`. ox_lib's `'inform'` and `'warning'` are shown as info |
-| `title` | Heading. If left out, the text from `Config.Titles` is used |
+| `type` | `'info'` (default), `'success'`, `'error'` or a type you made. ox_lib's `'inform'` and `'warning'` are shown as info |
+| `title` | Heading. If left out, the type's title from `Config.Types` is used |
 | `description` | The message. `\n` gives a line break |
 | `duration` | How long it stays, in milliseconds |
-| `icon` | Only `'dollar'` exists. Without `icon`, the notification uses the icon of its type |
+| `icon` | The name of an icon in `Config.Icons`, such as `'dollar'`. Without `icon`, the type's icon is used |
 
-The title is cut at 60 characters and the message at 300.
+By default the title is cut at 60 characters and the message at 300.
 
 GTA colour codes are removed from the text, and `~n~` becomes a line break. If the call has no `type`, the colour code picks one: `~r~` gives error and `~g~` gives success.
 
 ### Configuration
 
-Everything is in `config.lua`.
+Everything is in `config.lua`, so you do not need to edit any other file. Restart the resource after a change.
 
-| Setting | Default | Meaning |
-|---|---|---|
-| `Config.Position` | `'right-center'` | `right-center`, `left-center`, `top-right`, `top-left`, `bottom-right`, `bottom-left`, `top-center` or `bottom-center` |
-| `Config.MaxVisible` | `5` | More than this at once and the oldest is removed |
-| `Config.DefaultDuration` | `4000` | Duration when the call does not give one |
-| `Config.MinDuration`, `Config.MaxDuration` | `1000`, `30000` | Limits for the duration |
-| `Config.Titles` | `Info`, `Succes`, `Fejl` | Headings when no title is given |
+| Setting | What it controls |
+|---|---|
+| `Config.Position` | Where on screen: `right-center`, `left-center`, `top-right`, `top-left`, `bottom-right`, `bottom-left`, `top-center` or `bottom-center` |
+| `Config.MaxVisible` | How many can be shown at once |
+| `Config.DefaultDuration`, `MinDuration`, `MaxDuration` | Duration and limits in milliseconds |
+| `Config.MaxTitleLength`, `MaxTextLength` | How long the texts may be |
+| `Config.Style` | Width, spacing, corners, font sizes, text colour and font |
+| `Config.Types` | Title, colour and icon for each type |
+| `Config.DefaultType` | The type used when a call names no known type |
+| `Config.Aliases`, `Config.ColorCodes` | Other type names and GTA colour codes |
+| `Config.Icons` | The icons |
+
+#### Your own type and icon
+
+Find an icon on [Material Design Icons](https://pictogrammers.com/library/mdi/), pick **Copy SVG Path** and paste it into `config.lua`:
+
+```lua
+Config.Icons = {
+    -- the other icons
+    car = 'paste the path here',
+}
+
+Config.Types = {
+    -- the other types
+    garage = { title = 'Garage', color = '#2547b8', icon = 'car' },
+}
+```
+
+```lua
+exports.chubby_notify:notify({ type = 'garage', description = 'The car is in the garage' })
+```
+
+#### Updating from 1.0.0?
+
+`config.lua` has been rebuilt. Use the new file and move your own values over. Titles now live in `Config.Types`.
 
 ### With ox_lib and ESX
 
@@ -261,5 +317,7 @@ Report bugs and requests as an [issue](../../issues). For questions, join the Ch
 ## Licens
 
 MIT. Se [LICENSE](LICENSE). Skrifttypen Poppins har sin egen licens (SIL Open Font License) i [web/fonts/OFL.txt](web/fonts/OFL.txt).
+
+Ikonerne er fra Google Material Icons (Apache 2.0).
 
 Lavet af ChubbyDevNull.

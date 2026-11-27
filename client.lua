@@ -1,10 +1,14 @@
--- Typer, som andre scripts sender. ox_lib's 'inform' og 'warning' vises som info.
-local TYPES = { info = 'info', inform = 'info', warning = 'info', success = 'success', error = 'error' }
+-- Alt, der kan indstilles, står i config.lua
 
--- GTA's farvekode i teksten (~r~, ~g~ osv.) kan fortælle typen, hvis kaldet ikke selv angiver den.
-local CODE_TYPES = { r = 'error', g = 'success', y = 'info', o = 'info', b = 'info' }
-
-local MAX_TITLE, MAX_TEXT = 60, 300
+-- Finder typen: kaldets type, et andet navn for den eller GTA-farvekoden i beskeden
+local function resolveType(data)
+	local kind = data.type
+	if not Config.Types[kind] then kind = Config.Aliases[kind] end
+	if not Config.Types[kind] and type(data.description) == 'string' then
+		kind = Config.ColorCodes[data.description:match('~(%a)~')]
+	end
+	return Config.Types[kind] and kind or Config.DefaultType
+end
 
 -- Fjerner GTA's farvekoder og <br>. ~n~ bliver til linjeskift.
 local function clean(text, limit)
@@ -16,25 +20,19 @@ end
 local function notify(data)
 	if type(data) ~= 'table' then return end
 
-	local kind = TYPES[data.type]
-	if not kind and type(data.description) == 'string' then
-		local code = data.description:match('~(%a)~')
-		kind = code and CODE_TYPES[code]
-	end
-	kind = kind or 'info'
-
+	local preset = Config.Types[resolveType(data)]
 	local duration = tonumber(data.duration) or Config.DefaultDuration
-	duration = math.max(Config.MinDuration, math.min(Config.MaxDuration, duration))
 
 	SendNUIMessage({
 		action = 'notify',
-		type = kind,
-		title = clean(data.title or Config.Titles[kind], MAX_TITLE),
-		description = clean(data.description, MAX_TEXT),
-		duration = duration,
-		icon = type(data.icon) == 'string' and data.icon or nil,
+		title = clean(data.title or preset.title, Config.MaxTitleLength),
+		description = clean(data.description, Config.MaxTextLength),
+		duration = math.max(Config.MinDuration, math.min(Config.MaxDuration, duration)),
+		color = preset.color,
+		icon = Config.Icons[data.icon] or Config.Icons[preset.icon],
 		position = Config.Position,
 		maxVisible = Config.MaxVisible,
+		style = Config.Style,
 	})
 end
 
